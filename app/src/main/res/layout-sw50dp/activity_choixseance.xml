@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/fin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Retour"
+            android:onClick="finSeance"/>
+
+        <Button
+            android:id="@+id/stop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Stop"
+            android:onClick="stopSeance"/>
+
+        <Button
+        android:id="@+id/playPause"
+            android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pause/Play"
+            android:onClick="playPause"/>
+
+        <Spinner
+            android:id="@+id/matieres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </Spinner>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/picker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+        <NumberPicker
+            android:id="@+id/numberPickerHours2"
+            android:layout_width="80sp"
+            android:layout_height="wrap_content">
+        </NumberPicker>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text=":"
+            android:textSize="20dp"/>
+        <NumberPicker
+            android:id="@+id/numberPickerMinutes2"
+            android:layout_width="80sp"
+            android:layout_height="wrap_content">
+        </NumberPicker>
+    </LinearLayout>
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/minuteur"
+    android:textSize="25dp"
+    android:textColor="#2962FF"/>
+
+</LinearLayout>
