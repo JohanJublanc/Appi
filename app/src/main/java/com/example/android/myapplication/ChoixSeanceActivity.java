@@ -36,8 +36,8 @@ public class ChoixSeanceActivity extends AppCompatActivity {
     private static final String FORMAT = "%02d:%02d:%02d";
     CountDownTimer minuteur ;
     DataBaseHelper MyDB ;
-    Spinner spinnerMatieres;
-    LinearLayout picker;
+    Spinner spinner ;
+
 
 
     @Override
@@ -60,14 +60,19 @@ public class ChoixSeanceActivity extends AppCompatActivity {
 
         MyDB = new DataBaseHelper(this);
 
-        Spinner spinnerMatieres = (Spinner) findViewById(R.id.matieres) ;
+        spinner = (Spinner) findViewById(R.id.matieres) ;
+
+        String[] matieres ={"Maths","Français"};
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item,matieres);
+        spinner.setAdapter(adapter);
+
         // Création d'un ArrayAdapter utilisant le stringArray dans les ressources textuelles et un spinner par défaut
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.Matieres,android.R.layout.simple_spinner_dropdown_item);
+        //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.Matieres,android.R.layout.simple_spinner_dropdown_item);
         // layout à utiliser lorque la liste apparaît
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // Applique l'adapter au spinner
-        spinnerMatieres.setAdapter(adapter);
+        // spinnerMatieres.setAdapter(adapter);
 
     }
     public void playPause (View view) {
@@ -76,6 +81,8 @@ public class ChoixSeanceActivity extends AppCompatActivity {
         final int Heures = numberPickerHours.getValue();
         final int Minutes = numberPickerMinutes.getValue();
         final long dureeMillis = (Heures * 3600000 + Minutes * 60000) ;
+        final String matiere = spinner.getSelectedItem().toString(); ;
+
         playPause.setClickable(FALSE);
         minuteurAffichage.setVisibility(View.VISIBLE);
         //picker.setVisibility(LinearLayout.GONE);
@@ -97,7 +104,7 @@ public class ChoixSeanceActivity extends AppCompatActivity {
                 playPause.setClickable(TRUE);
                 int heuresSeance = (i/3600) ;
                 int minutesSeance = (i/60) - heuresSeance*60 ;
-                Boolean results = MyDB.insertData(date, dureeMillis,"matière");
+                Boolean results = MyDB.insertData(date, dureeMillis,matiere);
                 /*if(results==false) {
                     Toast.makeText(this, "Aucune donnée enregistrée", Toast.LENGTH_SHORT).show();
                 };*/
