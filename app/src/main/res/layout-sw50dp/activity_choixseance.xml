@@ -1,70 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     android:orientation="vertical">
 
-    <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
-
-        <Button
+    <Button
             android:id="@+id/fin"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:onClick="finSeance"
+            android:layout_marginRight="80dp"/>
+
+
+    <TextView
+        android:id="@+id/textMatieres"
+        android:layout_below="@id/fin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:text="Matière"
+        android:layout_marginTop="30dp">
+    </TextView>
+
+    <Spinner
+        android:id="@+id/matieres"
+        android:layout_below="@id/textMatieres"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginBottom="30dp">
+    </Spinner>
+
+    <LinearLayout
+        android:id="@+id/text_hms"
+        android:layout_below="@id/matieres"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Heures"
+            android:gravity="center"/>
+        <TextView
+            android:layout_width="8dp"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Minutes"
+            android:gravity="center"/>
+        <TextView
+            android:layout_width="8dp"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Secondes"
+            android:gravity="center"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/picker"
+        android:layout_below="@id/text_hms"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Retour"
-            android:onClick="finSeance"/>
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="4dp">
+
+        <NumberPicker
+            android:id="@+id/numberPickerHours2"
+            android:layout_width="100sp"
+            android:layout_height="wrap_content">
+        </NumberPicker>
+        <TextView
+            android:layout_width="8dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text=":"
+            android:textSize="40dp"/>
+        <NumberPicker
+            android:id="@+id/numberPickerMinutes2"
+            android:layout_width="100sp"
+            android:layout_height="wrap_content">
+        </NumberPicker>
+        <TextView
+            android:layout_width="8dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text=":"
+            android:textSize="40dp"/>
+        <NumberPicker
+            android:id="@+id/numberPickerSecondes2"
+            android:layout_width="100sp"
+            android:layout_height="wrap_content">
+        </NumberPicker>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/afficheur"
+        android:layout_below="@id/text_hms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/minuteur"
+            android:layout_margin="8dp"
+            android:textSize="80dp"
+            android:textColor="#2962FF"
+            android:textAlignment="center"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/test"
+        android:text="test"
+        android:layout_marginTop="350dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/test2"
+        android:text="test"
+        android:layout_marginTop="370dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/stop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Stop"
-            android:onClick="stopSeance"/>
+            android:text="STOP"
+            android:layout_weight="1"
+            android:background="#FAFAFA"
+            android:textColor="#1A237E"
+            android:textSize="25sp"
+            android:onClick="stopSeance" />
 
         <Button
-        android:id="@+id/playPause"
+            android:id="@+id/play"
             android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Pause/Play"
-            android:onClick="playPause"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="PLAY"
+            android:background="#FAFAFA"
+            android:textColor="#00BFA5"
+            android:textSize="25sp"
+            android:onClick="play" />
 
-        <Spinner
-            android:id="@+id/matieres"
+        <Button
+            android:id="@+id/pause"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </Spinner>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="PAUSE"
+            android:background="#FAFAFA"
+            android:textColor="#F44336"
+            android:textSize="25sp"
+            android:onClick="pause" />
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/picker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
-        <NumberPicker
-            android:id="@+id/numberPickerHours2"
-            android:layout_width="80sp"
-            android:layout_height="wrap_content">
-        </NumberPicker>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text=":"
-            android:textSize="20dp"/>
-        <NumberPicker
-            android:id="@+id/numberPickerMinutes2"
-            android:layout_width="80sp"
-            android:layout_height="wrap_content">
-        </NumberPicker>
-    </LinearLayout>
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/minuteur"
-    android:textSize="25dp"
-    android:textColor="#2962FF"/>
-
-</LinearLayout>
+</RelativeLayout>

@@ -19,6 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 import static android.R.interpolator.linear;
 import static com.example.android.myapplication.DataBaseHelper.COL_2;
+import static com.example.android.myapplication.R.id.matieres;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import java.util.Calendar;
@@ -28,25 +29,59 @@ import java.util.Calendar;
  */
 
 public class ChoixSeanceActivity extends AppCompatActivity {
+ // Les Layout
+    LinearLayout picker ;
+    LinearLayout afficheur ;
+
+ // Les pickers pour choisir la durée de la séance
     NumberPicker numberPickerHours;
     NumberPicker numberPickerMinutes;
-    Button playPause;
+    NumberPicker numberPickerSecondes;
+
+//  Les bouttons
+    Button play;
+    Button pause;
     Button fin;
+    Button stop;
+
+// La vue d'affichage du compte à rebours
     TextView minuteurAffichage ;
-    private static final String FORMAT = "%02d:%02d:%02d";
-    CountDownTimer minuteur ;
-    DataBaseHelper MyDB ;
+
+// Le spinner permettant de sélectionner la matière
     Spinner spinner ;
 
+// Format pour l'affichage du compte à rebours
+    private static final String FORMAT = "%02d:%02d:%02d";
 
+// Le compteur à rebour
+    CountDownTimer minuteur ;
+
+// L'assistant de gestion de la base de données SQLite où sont enregistrées les séances
+    DataBaseHelper MyDB ;
+
+    long dureeRestanteMillis ;
+    boolean pausePlay ;
+
+    TextView test ;
+            TextView test2 ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choixseance);
 
-        playPause = (Button) findViewById(R.id.playPause) ;
+        play = (Button) findViewById(R.id.play) ;
+        //play.setBackgroundResource(R.drawable.play);
+
+        pause = (Button) findViewById(R.id.pause) ;
+        //pause.setBackgroundResource(R.drawable.pause);
+
         fin = (Button) findViewById(R.id.fin) ;
+        //fin.setBackgroundResource(R.drawable.retour);
+
+        stop = (Button) findViewById(R.id.stop) ;
+        //stop.setBackgroundResource(R.drawable.stop);
+        stop.setClickable(FALSE);
 
         numberPickerHours = (NumberPicker) findViewById(R.id.numberPickerHours2);
         numberPickerHours.setMaxValue(24);
@@ -56,40 +91,63 @@ public class ChoixSeanceActivity extends AppCompatActivity {
         numberPickerMinutes.setMaxValue(60);
         numberPickerMinutes.setMinValue(0);
 
+        numberPickerSecondes = (NumberPicker) findViewById(R.id.numberPickerSecondes2);
+        numberPickerSecondes.setMaxValue(60);
+        numberPickerSecondes.setMinValue(0);
+
         minuteurAffichage = (TextView) findViewById(R.id.minuteur) ;
+        picker = (LinearLayout) findViewById(R.id.picker) ;
+        afficheur = (LinearLayout) findViewById(R.id.afficheur) ;
+        afficheur.setVisibility(View.GONE);
 
         MyDB = new DataBaseHelper(this);
 
-        spinner = (Spinner) findViewById(R.id.matieres) ;
-
-        String[] matieres ={"Maths","Français"};
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item,matieres);
-        spinner.setAdapter(adapter);
+        spinner = (Spinner) findViewById(matieres) ;
 
         // Création d'un ArrayAdapter utilisant le stringArray dans les ressources textuelles et un spinner par défaut
-        //ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.Matieres,android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.Matieres,android.R.layout.simple_spinner_dropdown_item);
         // layout à utiliser lorque la liste apparaît
         //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //String[] matieres ={"Maths","Français"};
+       // ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item,matieres);
 
         // Applique l'adapter au spinner
-        // spinnerMatieres.setAdapter(adapter);
+        spinner.setAdapter(adapter);
+
+
+        dureeRestanteMillis = (long) 0;
+        pausePlay = FALSE ;
+
+        test= (TextView) findViewById(R.id.test) ;
+        test2= (TextView) findViewById(R.id.test2) ;
+
 
     }
-    public void playPause (View view) {
 
+
+    public void play (View view) {
+// Récupération des informations relatives à la séance
         final long date = System.currentTimeMillis();
         final int Heures = numberPickerHours.getValue();
         final int Minutes = numberPickerMinutes.getValue();
-        final long dureeMillis = (Heures * 3600000 + Minutes * 60000) ;
-        final String matiere = spinner.getSelectedItem().toString(); ;
+        final int Secondes = numberPickerSecondes.getValue();
+        final String matiere = spinner.getSelectedItem().toString();
 
-        playPause.setClickable(FALSE);
-        minuteurAffichage.setVisibility(View.VISIBLE);
-        //picker.setVisibility(LinearLayout.GONE);
+// Récupération de la durée de la séance
+        final long dureeMillis = calculDuree(pausePlay,Heures,Minutes,dureeRestanteMillis) ;
 
+// Désactivation de play et du spinner et activation de la touche stop
+        play.setClickable(FALSE);
+        spinner.setClickable(FALSE);
+        stop.setClickable(TRUE);
 
+//Passage de l'affichage des pickers à l'affichage du compte à rebour
+        picker.setVisibility(View.GONE);
+        afficheur.setVisibility(View.VISIBLE);
+
+// Lancement du minuteur
         minuteur = new CountDownTimer(dureeMillis, 1000) {
-            int i = 0 ;
+
             public void onTick(final long millisUntilFinished) {
                 minuteurAffichage.setText("" + String.format(FORMAT,
                         TimeUnit.MILLISECONDS.toHours(millisUntilFinished),
@@ -97,21 +155,31 @@ public class ChoixSeanceActivity extends AppCompatActivity {
                                 TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
                         TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(
                                 TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
-            i=i+1;
+            dureeRestanteMillis = millisUntilFinished ;
             }
+
             public void onFinish() {
-                minuteurAffichage.setText("Bien joué ma gueule !");
-                playPause.setClickable(TRUE);
-                int heuresSeance = (i/3600) ;
-                int minutesSeance = (i/60) - heuresSeance*60 ;
-                Boolean results = MyDB.insertData(date, dureeMillis,matiere);
-                /*if(results==false) {
-                    Toast.makeText(this, "Aucune donnée enregistrée", Toast.LENGTH_SHORT).show();
-                };*/
+
+                //Enregistrement des données dans la base SQLite
+                MyDB.insertData(date, Heures * 3600000 + Minutes * 60000 - dureeRestanteMillis + 10000, matiere);
+                test.setText("OK OK " + (Heures * 3600000 + Minutes * 60000)) ;
+                test2.setText("" + dureeRestanteMillis);
+                //Indicateur de pause remis à False et réinitialisation de la durée restante
+                pausePlay = FALSE ;
+                dureeRestanteMillis = 0 ;
+
+                //Réactivation de play et du spinner, désactivation de stop
+                play.setClickable(TRUE);
+                spinner.setClickable(TRUE);
+                stop.setClickable(FALSE);
+
+                //Affichage des pickers et disparition de l'afficheur de compte à rebours
+                picker.setVisibility(View.VISIBLE);
+                afficheur.setVisibility(View.GONE);
+
             }
+
         }.start();
-
-
     }
 
         public void finSeance (View v){
@@ -122,8 +190,24 @@ public class ChoixSeanceActivity extends AppCompatActivity {
         public void stopSeance (View v){
             minuteur.onFinish();
             minuteur.cancel();
-            playPause.setClickable(TRUE);
+            play.setClickable(TRUE);
             minuteurAffichage.setText(""+ String.format(FORMAT,0,0,0));
         }
+
+        public void pause (View v){
+            minuteur.cancel();
+            pausePlay = TRUE ;
+            play.setClickable(TRUE);
+        }
+
+    public long calculDuree(boolean pausePlay,int Heures,int Minutes,long dureeRestanteMillis){
+        long dureeMillis ;
+        if (pausePlay==FALSE){
+            dureeMillis =(Heures * 3600000 + Minutes * 60000) ;
+        }else{ dureeMillis = dureeRestanteMillis ;
+        }
+        return dureeMillis ;
+    }
+
 
 }

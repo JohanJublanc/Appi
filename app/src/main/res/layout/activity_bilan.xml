@@ -73,13 +73,23 @@
         android:textSize="15sp"
         android:textColor="#2962FF"/>
 
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Matière"
+            android:textSize="15sp"
+            android:textColor="#2962FF"/>
+
     </LinearLayout>
 
-
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_below="@+id/Titres"
+        android:layout_height="250dp">
 
     <LinearLayout
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:layout_below="@+id/Titres"
     android:orientation="horizontal">
@@ -113,5 +123,14 @@
         android:layout_height="wrap_content"
         android:text=""/>
 
+        <TextView
+            android:id="@+id/bilanMatieres"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text=""/>
+
     </LinearLayout>
+    </ScrollView>
+
 </RelativeLayout>

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +27,7 @@ public class BilanActivity extends AppCompatActivity
     TextView bilanHeures;
         TextView bilanMinutes;
         TextView bilanDates ;
-
+TextView bilanMatieres ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -38,6 +39,7 @@ public class BilanActivity extends AppCompatActivity
         bilanHeures = (TextView) findViewById(R.id.bilanHeures);
         bilanMinutes = (TextView) findViewById(R.id.bilanMinutes);
         bilanDates = (TextView) findViewById(R.id.bilanDates) ;
+        bilanMatieres = (TextView) findViewById(R.id.bilanMatieres);
     }
     public void fermerBilan (View v){
         Intent i = new Intent(this, MainActivity.class);
@@ -48,9 +50,6 @@ public class BilanActivity extends AppCompatActivity
         Cursor res = MyDB.getAllData();
 
         StringBuffer stringBuffer = new StringBuffer();
-        StringBuffer stringBufferDureeHeures = new StringBuffer();
-        StringBuffer stringBufferDureeMinutes = new StringBuffer() ;
-        StringBuffer stringBufferDates = new StringBuffer() ;
 
 
         if(res!=null && res.getCount()>0){
@@ -93,13 +92,14 @@ public class BilanActivity extends AppCompatActivity
             res.moveToPosition(-1);
             stringBuffer.delete(0,stringBuffer.length());
         }
-        //StringBuffer stringBuffer = new StringBuffer();
-            //if(res!=null && res.getCount()>0){
-            //    while (res.moveToNext()){
-            //stringBuffer.append("Date: "+res.getString(1)+"\n");
 
-            //stringBuffer.append("Durée_Heures : "+res.getString(2)+"\n");
-            //stringBuffer.append("Durée_Minutes : "+res.getString(3)+"\n"+"\n");
+        if(res!=null && res.getCount()>0){
+            while (res.moveToNext()){
+                stringBuffer.append(" "+res.getString(3)+"\n");}
+            bilanMatieres.setText(stringBuffer.toString());
+            res.moveToPosition(-1);
+            stringBuffer.delete(0,stringBuffer.length());
+        }
 
     }
 
