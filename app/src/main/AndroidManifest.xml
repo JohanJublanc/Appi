@@ -24,6 +24,9 @@
         <activity android:name=".ChoixSeanceActivity"
             android:exported="true"/>
 
+        <activity android:name=".ProgramActivity"
+            android:exported="true"/>
+
     </application>
 
 </manifest>

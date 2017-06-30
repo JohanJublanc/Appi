@@ -62,8 +62,9 @@ public class ChoixSeanceActivity extends AppCompatActivity {
     long dureeRestanteMillis ;
     boolean pausePlay ;
 
+    //TextViews de test
     TextView test ;
-            TextView test2 ;
+    TextView test2 ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +119,7 @@ public class ChoixSeanceActivity extends AppCompatActivity {
         dureeRestanteMillis = (long) 0;
         pausePlay = FALSE ;
 
+        //TextView de test
         test= (TextView) findViewById(R.id.test) ;
         test2= (TextView) findViewById(R.id.test2) ;
 
@@ -162,8 +164,11 @@ public class ChoixSeanceActivity extends AppCompatActivity {
 
                 //Enregistrement des données dans la base SQLite
                 MyDB.insertData(date, Heures * 3600000 + Minutes * 60000 - dureeRestanteMillis + 10000, matiere);
+
+                //Affichage de la durée de séance initiale et la durée restante en millisecondes
                 test.setText("OK OK " + (Heures * 3600000 + Minutes * 60000)) ;
                 test2.setText("" + dureeRestanteMillis);
+
                 //Indicateur de pause remis à False et réinitialisation de la durée restante
                 pausePlay = FALSE ;
                 dureeRestanteMillis = 0 ;
@@ -181,6 +186,7 @@ public class ChoixSeanceActivity extends AppCompatActivity {
 
         }.start();
     }
+
 
         public void finSeance (View v){
             Intent i = new Intent(this, MainActivity.class);
@@ -208,6 +214,4 @@ public class ChoixSeanceActivity extends AppCompatActivity {
         }
         return dureeMillis ;
     }
-
-
 }

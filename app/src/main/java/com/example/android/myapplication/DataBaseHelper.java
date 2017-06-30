@@ -18,13 +18,21 @@ import static android.os.Build.VERSION_CODES.M;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
     public static final  String DATABASE_NAME = "AppiDataBase6.db";
-    public static final  String TABLE_NAME = "Seances_table1";
 
+    public static final  String TABLE_BILAN = "Seances_table1";
     public static final  String COL_1 = "ID";
     public static final  String COL_2 = "DATE";
     public static final  String COL_3 = "DUREE_MILLIS";
-
     public static final  String COL_4 = "MATIERE";
+
+    public static final  String TABLE_PROGRAMMES = "Seances_table1";
+    public static final  String P_COL_1 = "ID";
+    public static final  String P_COL_2 = "NomProg";
+    public static final  String P_COL_3 = "Date_Debut";
+    public static final  String P_COL_4 = "Date_Fin";
+    public static final  String P_COL_5 = "Jour";
+    public static final  String P_COL_6 = "Heure";
+    public static final  String P_COL_7 = "Minutes";
 
     public DataBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -32,12 +40,19 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + TABLE_NAME + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,DATE INTEGER,DUREE_MILLIS INTEGER, MATIERE TEXT)");
+        db.execSQL("CREATE TABLE " + TABLE_BILAN + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,DATE INTEGER,DUREE_MILLIS INTEGER, MATIERE TEXT)");
+        db.execSQL("CREATE TABLE " + TABLE_PROGRAMMES + " (ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                                                        " NomProg TEXT," +
+                                                        " Date_Debut INTEGER," +
+                                                        " Date_Fin INTEGER," +
+                                                        " Jour TEXT)," +
+                                                        "Heure INTEGER,"+
+                                                        "Minutes INTEGER");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_BILAN);
     }
 
     public boolean insertData(long date,long duree_millis, String matiere){
@@ -47,20 +62,32 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         contentValues.put(COL_3,duree_millis);
 
         contentValues.put(COL_4,matiere);
-        long result = db.insert(TABLE_NAME,null,contentValues);
+        long result = db.insert(TABLE_BILAN,null,contentValues);
         db.close();
 
         //To Check Whether Data is Inserted in DataBase
-        if(result==-1){
-            return false;
-        }else{
-            return true;
-        }
+        return result != -1;
+    }
+
+    public boolean insertProgramme(String NomProg,int Date_Debut, int Date_Fin, String Jour,int Heure, int Minutes) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(P_COL_2, NomProg);
+        contentValues.put(P_COL_3, Date_Debut);
+        contentValues.put(P_COL_4, Date_Fin);
+        contentValues.put(P_COL_5, Jour);
+        contentValues.put(P_COL_6, Heure);
+        contentValues.put(P_COL_7, Minutes);
+
+        long result = db.insert(TABLE_PROGRAMMES, null, contentValues);
+        db.close();
+
+        return result != -1;
     }
 
     public Cursor getAllData(){
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor res = db.rawQuery("Select * from " + TABLE_NAME,null);
+        Cursor res = db.rawQuery("Select * from " + TABLE_BILAN,null);
         return  res;
     }
 }

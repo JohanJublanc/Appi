@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
+    android:id="@+id/ajoutMatiere"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_margin="8dp">
+
+    <EditText
+        android:id="@+id/nouvelleMatiere"
+        android:layout_width="wrap_content"
+        android:layout_weight="9"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textSize="25sp"
+        android:background="#FAFAFA"
+        android:textColor="#00E676"
+        android:text="+"
+        android:onClick="ajouterMatiere"/>
+
+</LinearLayout>
+
+
+    <TextView
+        android:layout_margin="8dp"
+        android:textSize="20sp"
+        android:id="@+id/matieresChoisies"
+        android:layout_below="@id/ajoutMatiere"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <RelativeLayout
+        android:id="@+id/choixSeances"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_below="@+id/matieresChoisies"
+        android:gravity="center">
+
+        <LinearLayout
+            android:id="@+id/text_choixSeances"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Jours"
+                android:layout_marginRight="25dp"
+                android:layout_weight="12"
+                android:textSize="14sp"
+                android:textColor="#3949AB"
+                android:gravity="center"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="8">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Heures"
+                android:layout_weight="10"
+                android:textSize="14sp"
+                android:textColor="#3949AB"
+                android:gravity="center"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="/"
+                android:gravity="center"
+                android:textColor="#3949AB"
+                android:textSize="15sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:text="Minutes"
+                android:textSize="14sp"
+                android:textColor="#3949AB"
+                android:gravity="center"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/picker_choixSeances"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/text_choixSeances">
+
+            <NumberPicker
+                android:id="@+id/numberPickerJour"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_marginRight="25dp"
+                android:layout_weight="17">
+            </NumberPicker>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="8">
+            <NumberPicker
+                android:id="@+id/numberPickerHeures"
+                android:layout_width="wrap_content"
+                android:layout_weight="10"
+                android:layout_height="100dp">
+            </NumberPicker>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text=":"
+                android:textSize="40dp"/>
+            <NumberPicker
+                android:id="@+id/numberPickerMinutes"
+                android:layout_width="wrap_content"
+                android:layout_weight="10"
+                android:layout_height="100dp">
+            </NumberPicker>
+                </LinearLayout>
+
+            </LinearLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/affichageProg"
+        android:layout_below="@id/choixSeances"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Jour"
+            android:gravity="center"/>
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Horaire"
+            android:gravity="center"/>
+
+        <Button
+            android:id="@+id/progAjoutSeance"
+            android:layout_width="12dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="+"
+            android:background="#FAFAFA"
+            android:gravity="center"
+            android:onClick="ajouterSeance"/>
+
+    </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/affichageProgJours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/affichageProgHoraires"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"/>
+        </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Valider"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:onClick="validerProgramme"/>
+    <Button
+        android:id="@+id/dateDebut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TEST"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:onClick="enregitrerDateDebut"/>
+
+    <TextView
+        android:id="@+id/affichageDateDebut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="dateDebut"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/dateDebut"/>
+
+</RelativeLayout>
