@@ -4,10 +4,34 @@
     android:layout_height="match_parent">
 
 <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/choixTitreProgramme">
+
+        <TextView
+            android:id="@+id/affichageTitreProgramme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Titre du programme"
+            android:textSize="20sp"
+            android:layout_margin="8dp"
+            android:gravity="center"
+            android:layout_weight="10"/>
+
+        <Button
+            android:id="@+id/titreProgramme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="enregistrerTitre"/>
+
+</LinearLayout>
+
+<LinearLayout
     android:id="@+id/ajoutMatiere"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:layout_below="@id/choixTitreProgramme"
     android:layout_margin="8dp">
 
     <EditText
@@ -17,6 +41,7 @@
         android:layout_height="wrap_content"/>
 
     <Button
+        android:id="@+id/ajoutMatiereFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -24,10 +49,9 @@
         android:background="#FAFAFA"
         android:textColor="#00E676"
         android:text="+"
-        android:onClick="ajouterMatiere"/>
+        />
 
 </LinearLayout>
-
 
     <TextView
         android:layout_margin="8dp"
@@ -37,13 +61,55 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <LinearLayout
+        android:id="@+id/choixDatesDebutFin"
+        android:layout_below="@id/matieresChoisies"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="15dp">
+
+        <Button
+            android:id="@+id/dateDebut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+"
+            android:layout_alignParentBottom="true"
+            android:onClick="enregitrerDateDebut"
+            android:layout_weight="1"/>
+
+        <EditText
+            android:id="@+id/affichageDateDebut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Début"
+            android:layout_weight="5"/>
+
+        <Button
+            android:id="@+id/dateFin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@id/affichageDateDebut"
+            android:onClick="enregitrerDateFin"
+            android:layout_weight="1"/>
+
+        <EditText
+            android:id="@+id/affichageDateFin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fin"
+            android:layout_weight="5"/>
+
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/choixSeances"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:layout_below="@+id/matieresChoisies"
+        android:layout_below="@+id/choixDatesDebutFin"
         android:gravity="center">
 
         <LinearLayout
@@ -208,21 +274,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:onClick="validerProgramme"/>
-    <Button
-        android:id="@+id/dateDebut"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TEST"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:onClick="enregitrerDateDebut"/>
 
-    <TextView
-        android:id="@+id/affichageDateDebut"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="dateDebut"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@id/dateDebut"/>
 
 </RelativeLayout>

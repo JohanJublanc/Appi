@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">My Application</string>
+    <string name="alert_dialog_ok">OK</string>
+    <string name="alert_dialog_cancel">Annuler</string>
+    <string name="alert_dialog_titreProgramme_title">\"Entrer le titre du programme de révisions\"</string>
+    <string name="alert_dialog_Matieres_title">Choisir les matières pour ce programme</string>
+    <string name="ajout">+</string>
     <string-array name="Matieres">
         <item>Maths</item>
         <item>Français</item>

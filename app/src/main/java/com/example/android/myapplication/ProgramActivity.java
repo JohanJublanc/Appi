@@ -1,116 +1,118 @@
 package com.example.android.myapplication;
+import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import static android.R.attr.button;
-import static com.example.android.myapplication.R.id.affichageProgHoraires;
 
 /**
  * Created by Johan on 28/06/2017.
  */
 
 public class ProgramActivity extends AppCompatActivity{
-    EditText nouvelleMatiere;
-    String[] matieres;
-    TextView matieresChoisies;
 
+    // objet pour enregistrer
+    //le titre du programme
+    String nomProgramme;
+
+    // objets pour sélectionner et afficher
+    //les matières du programme
+    EditText nouvelleMatiere;
+    TextView matieresChoisies;
+    String[] matieres;
+    Button ajoutMatiereFragment ;
+
+    // objets pour sélectionner, stocker et afficher
+    //le début et la fin du programme
+    EditText affichageDateDebut ;
+    EditText affichageDateFin ;
+    int date_Debut ;
+    int date_Fin ;
+
+    // objets pour sélectionner, enregistrer et afficher
+    //les séances d'une semaine type
     NumberPicker numberPickerJour ;
     NumberPicker numberPickerHeures ;
     NumberPicker numberPickerMinutes ;
 
     TextView affichageProgJours ;
     TextView affichageProgHoraires ;
-
-    String nomProgramme;
-    int date_Debut ;
-    int date_Fin ;
+    TextView affichageTitreProgramme ;
 
     String[] progJours;
     int[] progHeures ;
     int[] progMinutes ;
+
     String[] joursSemaine ;
 
+
+    // Assistant de gestion de la base de données SQLite
     DataBaseHelper MyDB ;
-
-    DatePickerFragment datePickerFragment ;
-
-    String date ;
-    TextView affichageDateDebut ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_program);
 
-    matieresChoisies = (TextView) findViewById(R.id.matieresChoisies) ;
-    nouvelleMatiere = (EditText) findViewById(R.id.nouvelleMatiere) ;
-    nouvelleMatiere.setHint("Nouvelle matière") ;
-    matieres = new String[0] ;
-    progJours = new String[0] ;
-    progHeures = new int[0] ;
-    progMinutes = new int[0] ;
+    //objets pour
+    //le titre
+        affichageTitreProgramme = (TextView) findViewById(R.id.affichageTitreProgramme) ;
 
-    affichageProgJours = (TextView) findViewById(R.id.affichageProgJours);
-    affichageProgHoraires = (TextView) findViewById(R.id.affichageProgHoraires);
+    //objets pour
+    //les date de début et de fin
 
+        affichageDateDebut = (EditText) findViewById(R.id.affichageDateDebut) ;
+        affichageDateFin = (EditText) findViewById(R.id.affichageDateFin) ;
 
-    numberPickerJour = (NumberPicker) findViewById(R.id.numberPickerJour) ;
-    numberPickerJour.setMinValue(1);
-    numberPickerJour.setMaxValue(7);
-    joursSemaine = new String[]{"Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche"} ;
-    numberPickerJour.setDisplayedValues(joursSemaine);
-
-    numberPickerHeures = (NumberPicker) findViewById(R.id.numberPickerHeures) ;
-    numberPickerHeures.setMinValue(0);
-    numberPickerHeures.setMaxValue(24);
-
-    numberPickerMinutes = (NumberPicker) findViewById(R.id.numberPickerMinutes) ;
-    numberPickerMinutes.setMinValue(0);
-    numberPickerMinutes.setMaxValue(59);
-
-    MyDB = new DataBaseHelper(this) ;
-
-    nomProgramme = "Nouveau Programme" ;
-    date_Debut = 10 ;
-    date_Fin = 10 ;
-
-    datePickerFragment = new DatePickerFragment();
-
-    date = "nouvelle date" ;
-
-
-    /*datePickerFragment.doPositiveClick(){
-            date = datePickerFragment.date();
-            affichageDateDebut.setText(date);
-        }
-    */
-
-    affichageDateDebut = (TextView) findViewById(R.id.affichageDateDebut) ;
-    affichageDateDebut.setText(date);
-
-    }
-    public void ajouterMatiere(View view){
-        final StringBuffer stringBuffer = new StringBuffer();
-        final String[] matieresPlus = new String[matieres.length +1]  ;
-
-        for(int i=0;i<matieres.length;i++){
-            matieresPlus[i]=matieres[i];
-            stringBuffer.append(matieres[i] + "\n") ;
+    //objets pour
+    //les matière
+        matieresChoisies = (TextView) findViewById(R.id.matieresChoisies) ;
+        nouvelleMatiere = (EditText) findViewById(R.id.nouvelleMatiere) ;
+        nouvelleMatiere.setHint("Nouvelle matière") ;
+        matieres = new String[0] ;
+        ajoutMatiereFragment = (Button) findViewById(R.id.ajoutMatiereFragment);
+        ajoutMatiereFragment.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                enregistrerMatieres();
+            }
         }
 
-        matieresPlus[matieres.length] = nouvelleMatiere.getText().toString();
-        stringBuffer.append(matieresPlus[matieres.length]);
+        );
 
-        matieresChoisies.setText(""+stringBuffer) ;
-        matieres = matieresPlus ;
-        nouvelleMatiere.setText("");
+    //objets pour
+    //les séances d'une semaine type
+        progJours = new String[0] ;
+        progHeures = new int[0] ;
+        progMinutes = new int[0] ;
+
+        affichageProgJours = (TextView) findViewById(R.id.affichageProgJours);
+        affichageProgHoraires = (TextView) findViewById(R.id.affichageProgHoraires);
+
+        numberPickerJour = (NumberPicker) findViewById(R.id.numberPickerJour) ;
+        numberPickerJour.setMinValue(1);
+        numberPickerJour.setMaxValue(7);
+        joursSemaine = new String[]{"Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche"} ;
+        numberPickerJour.setDisplayedValues(joursSemaine);
+
+        numberPickerHeures = (NumberPicker) findViewById(R.id.numberPickerHeures) ;
+        numberPickerHeures.setMinValue(0);
+        numberPickerHeures.setMaxValue(24);
+
+        numberPickerMinutes = (NumberPicker) findViewById(R.id.numberPickerMinutes) ;
+        numberPickerMinutes.setMinValue(0);
+        numberPickerMinutes.setMaxValue(59);
+
+    //Gestionnaire de base de données
+        MyDB = new DataBaseHelper(this) ;
     }
-
 
     public void ajouterSeance (View view){
         ajouterJour();
@@ -160,7 +162,66 @@ public class ProgramActivity extends AppCompatActivity{
             MyDB.insertProgramme(nomProgramme, date_Debut, date_Fin,progJours[i],progHeures[i],progMinutes[i]);
         }
     }
+
     public void enregitrerDateDebut (View view){
-        datePickerFragment.show(getSupportFragmentManager(),"Test");
+        DatePickerFragment datePickerFragment = new DatePickerFragment(affichageDateDebut);
+        datePickerFragment.show(getSupportFragmentManager(),"Choix date de début");
     }
+
+    public void enregitrerDateFin (View view){
+        DatePickerFragment datePickerFragment = new DatePickerFragment(affichageDateFin);
+        datePickerFragment.show(getSupportFragmentManager(),"Choix date de fin");
+    }
+
+
+    public void enregistrerTitre(View view) {
+        DialogFragment newFragment = TitrePickerFragment.newInstance(R.string.alert_dialog_titreProgramme_title);
+        newFragment.show(getFragmentManager(), "dialog");
+    }
+
+            public void doPositiveClick(EditText edittext) {
+                affichageTitreProgramme.setText(edittext.getText()) ;
+                Log.i("FragmentAlertDialog", "Positive click!");
+            }
+
+            public void doNegativeClick() {
+                // Do stuff here.
+                Log.i("FragmentAlertDialog", "Negative click!");
+            }
+    public void enregistrerMatieres() {
+        DialogFragment choixMatieresFragment = MatieresPickerFragment.newInstance(R.string.alert_dialog_Matieres_title);
+
+        choixMatieresFragment.show(getFragmentManager(), "dialog");
+        /*plus.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                final StringBuffer stringBuffer = new StringBuffer();
+                final String[] matieresPlus = new String[matieres.length + 1];
+
+                for (int i = 0; i < matieres.length; i++) {
+                    matieresPlus[i] = matieres[i];
+                    stringBuffer.append(matieres[i] + "\n");
+                }
+
+                matieresPlus[matieres.length] = nouvelleMatiere.getText().toString();
+                stringBuffer.append(matieresPlus[matieres.length]);
+
+                matieresChoisies.setText("" + stringBuffer);
+                matieres = matieresPlus;
+                nouvelleMatiere.setText("");
+            }
+        });*/
+    }
+
+    public void doPositiveClickMatieres(String[] matieres) {
+
+                Log.i("FragmentAlertDialog", "Positive click!");
+            }
+
+            public void doNegativeClickMatieres() {
+                // Do stuff here.
+                Log.i("FragmentAlertDialog", "Negative click!");
+            }
+
+
+
 }

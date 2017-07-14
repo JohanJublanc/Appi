@@ -1,12 +1,13 @@
 package com.example.android.myapplication;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.widget.DatePicker;
-
+import android.widget.EditText;
+import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -17,7 +18,7 @@ import java.util.Calendar;
 public class DatePickerFragment extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
 
-    String formattedDate;
+    private EditText mEditText ;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -28,9 +29,12 @@ public class DatePickerFragment extends DialogFragment
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
 
-        formattedDate = "Petit à petit l'oiseau fait son nid";
         // Create a new instance of DatePickerDialog and return it
         return new DatePickerDialog(getActivity(), this, year, month, day);
+    }
+
+    public DatePickerFragment(EditText editText){
+        mEditText=editText ;
     }
 
     @Override
@@ -39,16 +43,13 @@ public class DatePickerFragment extends DialogFragment
         c.set(year, month, day);
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        formattedDate = String.valueOf(c.get(Calendar.YEAR));
+        String formattedDate = sdf.format(c.getTime());
+        Toast.makeText(getActivity(),formattedDate, Toast.LENGTH_LONG).show();
+        mEditText.setText(formattedDate);
     }
 
-    public void doPositiveClick() {
-
-        Log.i("FragmentAlertDialog", "Positive click!") ;
-    }
-
-    public String date(){
+    /*public String date(){
         return formattedDate;
-    }
+    }*/
 
 }
