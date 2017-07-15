@@ -11,7 +11,7 @@
         <TextView
             android:id="@+id/affichageTitreProgramme"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="Titre du programme"
             android:textSize="20sp"
             android:layout_margin="8dp"
@@ -22,7 +22,11 @@
             android:id="@+id/titreProgramme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="enregistrerTitre"/>
+            android:onClick="enregistrerTitre"
+            android:background="#FAFAFA"
+            android:textColor="#00E676"
+            android:text="+"
+            android:textSize="50sp"/>
 
 </LinearLayout>
 
@@ -32,76 +36,96 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:layout_below="@id/choixTitreProgramme"
-    android:layout_margin="8dp">
-
-    <EditText
-        android:id="@+id/nouvelleMatiere"
-        android:layout_width="wrap_content"
-        android:layout_weight="9"
-        android:layout_height="wrap_content"/>
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginBottom="4dp"
+    android:layout_marginTop="4dp">
 
     <Button
         android:id="@+id/ajoutMatiereFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textSize="25sp"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
         android:background="#FAFAFA"
+        android:text="Choix des matières"
         android:textColor="#00E676"
-        android:text="+"
-        />
-
+        android:textSize="15sp" />
 </LinearLayout>
 
-    <TextView
-        android:layout_margin="8dp"
-        android:textSize="20sp"
-        android:id="@+id/matieresChoisies"
-        android:layout_below="@id/ajoutMatiere"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <LinearLayout
+   <LinearLayout
         android:id="@+id/choixDatesDebutFin"
-        android:layout_below="@id/matieresChoisies"
+        android:layout_below="@id/ajoutMatiere"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_margin="15dp">
+        android:layout_margin="8dp">
 
         <Button
             android:id="@+id/dateDebut"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:text="+"
-            android:layout_alignParentBottom="true"
-            android:onClick="enregitrerDateDebut"
-            android:layout_weight="1"/>
-
-        <EditText
+            android:background="#FAFAFA"
+            android:textSize="15sp"
+            android:textColor="#00E676"
+            android:onClick="enregistrerDateDebut" />
+        <TextView
             android:id="@+id/affichageDateDebut"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Début"
-            android:layout_weight="5"/>
+            android:text="Date de début"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="1"/>
 
         <Button
             android:id="@+id/dateFin"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:textSize="15sp"
             android:text="+"
-            android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@id/affichageDateDebut"
-            android:onClick="enregitrerDateFin"
-            android:layout_weight="1"/>
+            android:textColor="#00E676"
+            android:background="#FAFAFA"
+            android:onClick="enregitrerDateFin" />
+       <TextView
+           android:id="@+id/affichageDateFin"
+           android:layout_marginLeft="20dp"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="Date de fin"
+           android:layout_weight="1"/>
+    </LinearLayout>
 
-        <EditText
-            android:id="@+id/affichageDateFin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Fin"
-            android:layout_weight="5"/>
+    <LinearLayout
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/seancesSemaine"
+        android:layout_below="@id/choixDatesDebutFin">
 
+        <TextView
+
+        android:textSize="15sp"
+        android:textColor="#0D47A1"
+        android:layout_weight="1"
+        android:id="@+id/textJoursSemaine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ajouter des séances hebdomadaires"/>
+
+    <Button
+        android:id="@+id/progAjoutSeance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:text="+"
+        android:textSize="25sp"
+        android:textColor="#00E676"
+        android:background="#FAFAFA"
+        android:textAlignment="center"
+        android:onClick="ajouterSeance"/>
     </LinearLayout>
 
     <RelativeLayout
@@ -109,7 +133,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:layout_below="@+id/choixDatesDebutFin"
+        android:layout_below="@+id/seancesSemaine"
         android:gravity="center">
 
         <LinearLayout
@@ -233,16 +257,6 @@
             android:text="Horaire"
             android:gravity="center"/>
 
-        <Button
-            android:id="@+id/progAjoutSeance"
-            android:layout_width="12dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="+"
-            android:background="#FAFAFA"
-            android:gravity="center"
-            android:onClick="ajouterSeance"/>
-
     </LinearLayout>
 
         <ScrollView
@@ -268,11 +282,14 @@
     </LinearLayout>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Valider"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:background="#FAFAFA"
+        android:textColor="#00E676"
+        android:textSize="25sp"
         android:onClick="validerProgramme"/>
 
 
