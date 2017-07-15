@@ -1,5 +1,6 @@
 package com.example.android.myapplication;
 import android.app.DialogFragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -12,6 +13,11 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import static android.R.attr.button;
+import static com.example.android.myapplication.R.id.affichageProgJours;
+import static com.example.android.myapplication.R.id.nouvelleMatiere;
+import static com.example.android.myapplication.R.id.numberPickerHeures;
+import static com.example.android.myapplication.R.id.numberPickerJour;
+import static com.example.android.myapplication.R.id.numberPickerMinutes;
 
 /**
  * Created by Johan on 28/06/2017.
@@ -25,7 +31,7 @@ public class ProgramActivity extends AppCompatActivity{
 
     // objets pour sélectionner et afficher
     //les matières du programme
-    EditText nouvelleMatiere;
+    TextView nouvelleMatiere;
     TextView matieresChoisies;
     String[] matieres;
     Button ajoutMatiereFragment ;
@@ -73,10 +79,10 @@ public class ProgramActivity extends AppCompatActivity{
         affichageDateFin = (EditText) findViewById(R.id.affichageDateFin) ;
 
     //objets pour
-    //les matière
-        matieresChoisies = (TextView) findViewById(R.id.matieresChoisies) ;
-        nouvelleMatiere = (EditText) findViewById(R.id.nouvelleMatiere) ;
-        nouvelleMatiere.setHint("Nouvelle matière") ;
+    //les matières
+        //matieresChoisies = (TextView) findViewById(R.id.matieresChoisies) ;
+        //nouvelleMatiere = (TextView) findViewById(nouvelleMatiere) ;
+        //nouvelleMatiere.setHint("Matières choisies") ;
         matieres = new String[0] ;
         ajoutMatiereFragment = (Button) findViewById(R.id.ajoutMatiereFragment);
         ajoutMatiereFragment.setOnClickListener(new View.OnClickListener(){
@@ -156,14 +162,8 @@ public class ProgramActivity extends AppCompatActivity{
         progMinutes=progMinutesPlus ;
     }
 
-    public void validerProgramme(View view){
 
-        for(int i=0; i<progJours.length ; i++){
-            MyDB.insertProgramme(nomProgramme, date_Debut, date_Fin,progJours[i],progHeures[i],progMinutes[i]);
-        }
-    }
-
-    public void enregitrerDateDebut (View view){
+    public void enregistrerDateDebut (View view){
         DatePickerFragment datePickerFragment = new DatePickerFragment(affichageDateDebut);
         datePickerFragment.show(getSupportFragmentManager(),"Choix date de début");
     }
@@ -181,47 +181,36 @@ public class ProgramActivity extends AppCompatActivity{
 
             public void doPositiveClick(EditText edittext) {
                 affichageTitreProgramme.setText(edittext.getText()) ;
-                Log.i("FragmentAlertDialog", "Positive click!");
             }
 
             public void doNegativeClick() {
                 // Do stuff here.
-                Log.i("FragmentAlertDialog", "Negative click!");
             }
+
     public void enregistrerMatieres() {
-        DialogFragment choixMatieresFragment = MatieresPickerFragment.newInstance(R.string.alert_dialog_Matieres_title);
-
+        DialogFragment choixMatieresFragment = MatieresPickerFragment.newInstance(R.string.alert_dialog_Matieres_title) ;
         choixMatieresFragment.show(getFragmentManager(), "dialog");
-        /*plus.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                final StringBuffer stringBuffer = new StringBuffer();
-                final String[] matieresPlus = new String[matieres.length + 1];
-
-                for (int i = 0; i < matieres.length; i++) {
-                    matieresPlus[i] = matieres[i];
-                    stringBuffer.append(matieres[i] + "\n");
-                }
-
-                matieresPlus[matieres.length] = nouvelleMatiere.getText().toString();
-                stringBuffer.append(matieresPlus[matieres.length]);
-
-                matieresChoisies.setText("" + stringBuffer);
-                matieres = matieresPlus;
-                nouvelleMatiere.setText("");
-            }
-        });*/
     }
 
-    public void doPositiveClickMatieres(String[] matieres) {
+        public void doPositiveClickMatieres(String[] matieresChoisies) {
+                matieres = matieresChoisies;
+                }
 
-                Log.i("FragmentAlertDialog", "Positive click!");
-            }
+        public void doNegativeClickMatieres() {
+                    // Do stuff here.
+                }
 
-            public void doNegativeClickMatieres() {
-                // Do stuff here.
-                Log.i("FragmentAlertDialog", "Negative click!");
-            }
+    public void validerProgramme(View view){
 
+        for(int i=0; i<progJours.length ; i++){
+            MyDB.insertProgramme(nomProgramme, date_Debut, date_Fin,progJours[i],progHeures[i],progMinutes[i]);
+        }
+        for(int j=0; j<matieres.length;j++){
+            MyDB.insertMatieres(nomProgramme,matieres[j]);
+        }
 
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
+    }
 
 }
