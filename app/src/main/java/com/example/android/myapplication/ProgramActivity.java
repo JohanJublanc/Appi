@@ -38,8 +38,8 @@ public class ProgramActivity extends AppCompatActivity{
 
     // objets pour sélectionner, stocker et afficher
     //le début et la fin du programme
-    EditText affichageDateDebut ;
-    EditText affichageDateFin ;
+    TextView affichageDateDebut ;
+    TextView affichageDateFin ;
     int date_Debut ;
     int date_Fin ;
 
@@ -75,8 +75,8 @@ public class ProgramActivity extends AppCompatActivity{
     //objets pour
     //les date de début et de fin
 
-        affichageDateDebut = (EditText) findViewById(R.id.affichageDateDebut) ;
-        affichageDateFin = (EditText) findViewById(R.id.affichageDateFin) ;
+        affichageDateDebut = (TextView) findViewById(R.id.affichageDateDebut) ;
+        affichageDateFin = (TextView) findViewById(R.id.affichageDateFin) ;
 
     //objets pour
     //les matières
@@ -210,6 +210,11 @@ public class ProgramActivity extends AppCompatActivity{
         }
 
         Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
+    }
+
+    public void annulerProgramme(View view){
+            Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
     }
 

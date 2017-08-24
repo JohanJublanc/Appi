@@ -62,9 +62,7 @@ public class ChoixSeanceActivity extends AppCompatActivity {
     long dureeRestanteMillis ;
     boolean pausePlay ;
 
-    //TextViews de test
-    TextView test ;
-    TextView test2 ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,25 +103,21 @@ public class ChoixSeanceActivity extends AppCompatActivity {
 
         spinner = (Spinner) findViewById(matieres) ;
 
-        // Création d'un ArrayAdapter utilisant le stringArray dans les ressources textuelles et un spinner par défaut
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.Matieres,android.R.layout.simple_spinner_dropdown_item);
+        // Création d'un ArrayAdapter utilisant le stringArray dans les ressources textuelles et un
+        // spinner par défaut
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.Matieres,
+                android.R.layout.simple_spinner_dropdown_item);
         // layout à utiliser lorque la liste apparaît
-        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //String[] matieres ={"Maths","Français"};
-       // ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item,matieres);
+       // ArrayAdapter adapter = new ArrayAdapter
+        // (this, android.R.layout.simple_spinner_dropdown_item,matieres);
 
         // Applique l'adapter au spinner
         spinner.setAdapter(adapter);
 
-
         dureeRestanteMillis = (long) 0;
         pausePlay = FALSE ;
-
-        //TextView de test
-        test= (TextView) findViewById(R.id.test) ;
-        test2= (TextView) findViewById(R.id.test2) ;
-
-
     }
 
 
@@ -164,10 +158,6 @@ public class ChoixSeanceActivity extends AppCompatActivity {
 
                 //Enregistrement des données dans la base SQLite
                 MyDB.insertData(date, Heures * 3600000 + Minutes * 60000 - dureeRestanteMillis + 10000, matiere);
-
-                //Affichage de la durée de séance initiale et la durée restante en millisecondes
-                test.setText("OK OK " + (Heures * 3600000 + Minutes * 60000)) ;
-                test2.setText("" + dureeRestanteMillis);
 
                 //Indicateur de pause remis à False et réinitialisation de la durée restante
                 pausePlay = FALSE ;

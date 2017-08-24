@@ -15,18 +15,28 @@
         android:paddingTop="8dp"
         android:paddingRight="8dp"
         android:paddingLeft="8dp"
-        android:text="Bienvenu mon lapin"/>
+        android:text="Bienvenu sur APPI"
+        android:gravity="center"/>
+
+
+    <LinearLayout
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:orientation="vertical"
+     android:layout_below="@id/Text1">
+
+
     <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-        android:layout_below="@id/Text1">
+        android:layout_marginBottom="8dp">
 
         <Button
 
             android:layout_marginLeft="8dp"
             android:layout_marginRight="2dp"
-            android:id="@+id/Boutton"
+            android:id="@+id/lancerSeance"
             android:layout_weight="0.5"
             android:layout_width="wrap_content"
             android:layout_height="100dp"
@@ -45,5 +55,33 @@
             android:background="#E8EAF6"
             android:onClick="ouvrirBilan"/>
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/Text1">
+
+        <Button
+
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="2dp"
+            android:id="@+id/lancerProgramme"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:onClick="choixProgramme"
+            android:background="#E8EAF6"
+            android:text="Nouveau programme"/>
+
+        <Button
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="2dp"
+            android:layout_weight="1"
+            android:layout_height="100dp"
+            android:layout_width="match_parent"
+            android:background="#E8EAF6"/>
+    </LinearLayout>
+ </LinearLayout>
 
 </RelativeLayout>

@@ -13,11 +13,12 @@
     android:layout_marginBottom="4dp"
     android:orientation="horizontal">
     <EditText
-        android:id="@+id/testMatiere"
+        android:id="@+id/nouvelleMatiere"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="9"
         android:hint="Nouvelle matière" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

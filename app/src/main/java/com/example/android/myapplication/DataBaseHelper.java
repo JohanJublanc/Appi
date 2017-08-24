@@ -25,7 +25,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final  String COL_3 = "DUREE_MILLIS";
     public static final  String COL_4 = "MATIERE";
 
-    public static final  String TABLE_PROGRAMMES = "Seances_table1";
+    public static final  String TABLE_PROGRAMMES = "Programmes_table1";
     public static final  String P_COL_1 = "ID";
     public static final  String P_COL_2 = "NomProg";
     public static final  String P_COL_3 = "Date_Debut";
@@ -34,13 +34,22 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final  String P_COL_6 = "Heure";
     public static final  String P_COL_7 = "Minutes";
 
+    public static final  String TABLE_MATIERES = "Matieres_table1";
+    public static final  String M_COL_1 = "ID";
+    public static final  String M_COL_2 = "NomProg";
+    public static final  String M_COL_3 = "Matieres";
+
     public DataBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + TABLE_BILAN + " (ID INTEGER PRIMARY KEY AUTOINCREMENT,DATE INTEGER,DUREE_MILLIS INTEGER, MATIERE TEXT)");
+        db.execSQL("CREATE TABLE " + TABLE_BILAN + " (ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                                                        "DATE INTEGER," +
+                                                        "DUREE_MILLIS INTEGER," +
+                                                        " MATIERE TEXT)");
+
         db.execSQL("CREATE TABLE " + TABLE_PROGRAMMES + " (ID INTEGER PRIMARY KEY AUTOINCREMENT," +
                                                         " NomProg TEXT," +
                                                         " Date_Debut INTEGER," +
@@ -48,6 +57,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                                                         " Jour TEXT)," +
                                                         "Heure INTEGER,"+
                                                         "Minutes INTEGER");
+
+        db.execSQL("CREATE TABLE " + TABLE_MATIERES + " (ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                                                        " NomProg TEXT," +
+                                                        " Matieres TEXT");
     }
 
     @Override
@@ -80,6 +93,18 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         contentValues.put(P_COL_7, Minutes);
 
         long result = db.insert(TABLE_PROGRAMMES, null, contentValues);
+        db.close();
+
+        return result != -1;
+    }
+
+    public boolean insertMatieres(String NomProg,String matieres) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(M_COL_2, NomProg);
+        contentValues.put(M_COL_3, matieres);
+
+        long result = db.insert(TABLE_MATIERES, null, contentValues);
         db.close();
 
         return result != -1;
